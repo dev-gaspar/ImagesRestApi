@@ -4,6 +4,7 @@ import com.yourcode.ImagesRestApi.modelos.Imagen;
 import com.yourcode.ImagesRestApi.servicios.ImagenServicio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,13 @@ public class Controlador {
     @GetMapping("/AllImages")
     public List<Imagen> verImages() {
         return imagenServicio.getAllImages();
+    }
+
+    @GetMapping("/")
+    public String cargarImagen(Model model) {
+        Imagen img = new Imagen();
+        model.addAttribute("img", img);
+        return "CargarImagen";
     }
 
     @PostMapping("/save")
