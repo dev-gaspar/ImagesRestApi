@@ -3,6 +3,7 @@ package com.yourcode.ImagesRestApi.controlador;
 import com.yourcode.ImagesRestApi.modelos.Imagen;
 import com.yourcode.ImagesRestApi.servicios.ImagenServicio;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -13,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.List;
 
 
-@RestController
+@Controller
 @RequestMapping("/api")
 public class Controlador {
     @Autowired
@@ -25,7 +26,7 @@ public class Controlador {
     }
 
     @PostMapping("/save")
-    public Imagen guardar(@RequestParam("file") MultipartFile imagen) {
+    public String guardar(@RequestParam("file") MultipartFile imagen) {
         Imagen nuevaImagen = new Imagen();
 
         if (!imagen.isEmpty()) {
@@ -46,7 +47,7 @@ public class Controlador {
             }
 
         }
-        return nuevaImagen;
+        return "CargarImagen";
     }
 
     @GetMapping("/show/{id}")
