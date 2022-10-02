@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cargar imagen</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
+</head>
+<body>
+<form th:action="@{/save}" th:object="${img}"
+      method="post" enctype="multipart/form-data">
+
+    <!--Campo la imagen-->
+    <div class="row">
+        <div class="form-group col-md-12">
+            <label class="col-md-3" for="imagen">Seleccionar imagen:</label>
+            <div class="col-md-6">
+                <input type="file" name="file" class="form-control" id="imagen">
+            </div>
+        </div>
+    </div>
+
+    <!--Boton -->
+    <div class="row">
+        <div class="col-md-2">
+            <button class="btn btn-success">Guardar</button>
+        </div>
+    </div>
+</form>
+</body>
+</html>
