@@ -6,7 +6,12 @@
   <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css'>
 </head>
 <body>
-<img th:src="@{'/images/' + ${img.name}}"
-th:alt="${img.name}">
+
+<tr th:each="entity : ${img}">
+  <td  th:with="imagen = ${entity.name}">
+    <img th:src="@{'/images/' + ${imagen}}"  width='300px' height='300px'/>
+    <span th:text="${entity.name}"></span>
+  </td>
+  </tr>
 </body>
 </html>
