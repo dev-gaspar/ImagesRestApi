@@ -1,0 +1,24 @@
+cloud:
+  aws:
+    credentials:
+      access-key: AKIAQ2NWHHBJ2LVA22PN
+      secret-key: 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
+    region:
+      static: us-east-1
+    stack:
+      auto: false
+
+application:
+  bucket:
+    name: storage-apirest
+
+spring:
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2MB
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+server:
+  port: 8080
