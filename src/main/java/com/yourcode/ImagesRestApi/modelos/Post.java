@@ -3,19 +3,25 @@ package com.yourcode.ImagesRestApi.modelos;
 import javax.persistence.*;
 
 @Entity
-@Table(name="imagen")
-public class Imagen {
+@Table(name="posts")
+public class Post {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    private String titulo;
+
+    private String description;
     private String name;
     private String imagenUrl;
     private String imagenId;
 
-    public Imagen() {
+    public Post() {
     }
 
-    public Imagen(String name, String imagenUrl, String imagenId) {
+    public Post(String titulo, String description,String name, String imagenUrl, String imagenId) {
+        this.titulo = titulo;
+        this.description = description;
         this.name = name;
         this.imagenUrl = imagenUrl;
         this.imagenId = imagenId;
@@ -27,6 +33,22 @@ public class Imagen {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getName() {
