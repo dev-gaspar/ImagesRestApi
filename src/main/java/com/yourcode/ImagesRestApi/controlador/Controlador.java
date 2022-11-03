@@ -37,16 +37,21 @@ public class Controlador {
 
     public ResponseEntity<?> Postear(@RequestPart("titulo") String titulo, @RequestPart("description") String description, @RequestPart("file") MultipartFile imagen)throws IOException {
         BufferedImage bi = ImageIO.read(imagen.getInputStream());
-        if(bi == null){
-            return new ResponseEntity(new Mensaje("imagen no válida"), HttpStatus.BAD_REQUEST);
+        Post post = null;
+        if(bi != null){
+            Map result = cloudinaryService.upload(imagen);
+            post =
+                    new Post(titulo,description,(String)result.get("original_filename"),
+                            (String)result.get("url"),
+                            (String)result.get("public_id"));
+        } else {
+            post =
+                    new Post(titulo,description,null,
+                           null,
+                            null);
         }
-        Map result = cloudinaryService.upload(imagen);
-        Post img =
-                new Post(titulo,description,(String)result.get("original_filename"),
-                        (String)result.get("url"),
-                        (String)result.get("public_id"));
-        postServicio.saveOrUpdatePost(img);
 
+        postServicio.saveOrUpdatePost(post);
         return new ResponseEntity(new Mensaje("posteado"), HttpStatus.OK);
     }
 
