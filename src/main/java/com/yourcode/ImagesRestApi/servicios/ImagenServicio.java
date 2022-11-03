@@ -4,11 +4,13 @@ import com.yourcode.ImagesRestApi.modelos.Imagen;
 import com.yourcode.ImagesRestApi.respositorios.ImagenRepositorio;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Transactional
 public class ImagenServicio {
     @Autowired
     ImagenRepositorio imagenRepositorio;
@@ -37,6 +39,10 @@ public class ImagenServicio {
             return false;
         }
         return true;
+    }
+
+    public boolean exists(int id){
+        return imagenRepositorio.existsById(id);
     }
 
 }
