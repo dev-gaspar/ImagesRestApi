@@ -34,23 +34,18 @@ public class Controlador {
 
 
     @PostMapping("/post")
-
-    public ResponseEntity<?> Postear(@RequestPart("titulo") String titulo, @RequestPart("description") String description, @RequestPart("file") MultipartFile imagen)throws IOException {
+    public ResponseEntity<?> Postear(@RequestPart("titulo") String titulo,
+                                     @RequestPart("description") String description,
+                                     @RequestPart("file") MultipartFile imagen)throws IOException
+    {
         BufferedImage bi = ImageIO.read(imagen.getInputStream());
         Post post = null;
         if(bi != null){
             Map result = cloudinaryService.upload(imagen);
-            post =
-                    new Post(titulo,description,(String)result.get("original_filename"),
-                            (String)result.get("url"),
-                            (String)result.get("public_id"));
+            post = new Post(titulo,description,(String)result.get("original_filename"), (String)result.get("url"), (String)result.get("public_id"));
         } else {
-            post =
-                    new Post(titulo,description,null,
-                           null,
-                            null);
+            post = new Post(titulo,description,null,null,null);
         }
-
         postServicio.saveOrUpdatePost(post);
         return new ResponseEntity(new Mensaje("posteado"), HttpStatus.OK);
     }
@@ -58,6 +53,31 @@ public class Controlador {
     @GetMapping("/post/{id}")
     public Post PostById(@PathVariable Integer id) {
         return postServicio.getPostById(id);
+    }
+
+    @PutMapping("/post/{id}")
+    public ResponseEntity<?>  UpdatePost(@PathVariable Integer id,
+                                         @RequestPart("titulo") String titulo,
+                                         @RequestPart("description") String description,
+                                         @RequestPart("file") MultipartFile imagen) throws IOException
+    {
+        BufferedImage bi = ImageIO.read(imagen.getInputStream());
+        Post post = null;
+
+        if (postServicio.getPostById(id).getImagenId()!=null){
+            Map resultDelete = cloudinaryService.delete(postServicio.getPostById(id).getImagenId());
+        }
+
+        if(bi != null){
+            Map result = cloudinaryService.upload(imagen);
+            post = new Post(titulo,description,(String)result.get("original_filename"), (String)result.get("url"), (String)result.get("public_id"));
+        } else {
+            post = new Post(titulo,description,null,null,null);
+        }
+        post.setId(id);
+        postServicio.saveOrUpdatePost(post);
+
+        return new ResponseEntity(new Mensaje("post editado"), HttpStatus.OK);
     }
 
     @DeleteMapping("/post/{id}")
